@@ -38,7 +38,12 @@ class Hangman:
 
     def play(self, letter):
         # if letter is in the word put it in correct, else put it in wrong
-        pass
+        if letter in self.word:
+            if letter not in self.correct:
+                self.correct += letter
+        else:
+            if letter not in self.wrong:
+                self.wrong += letter
 
 
 if __name__ == '__main__':
