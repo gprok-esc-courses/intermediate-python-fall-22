@@ -1,5 +1,7 @@
 from PyQt5 import QtWidgets
 
+from projects.hangman.DrawingArea import DrawingArea
+
 
 class HangmanUI(QtWidgets.QMainWindow):
     def __init__(self, hangman):
@@ -14,8 +16,10 @@ class HangmanUI(QtWidgets.QMainWindow):
         self.play_again_btn = QtWidgets.QPushButton("Play Again")
         self.play_again_btn.clicked.connect(self.play_again)
         self.exit_btn = QtWidgets.QPushButton("EXIT")
+        self.drawing_area = DrawingArea()
         panel = QtWidgets.QFrame()
         vbox = QtWidgets.QVBoxLayout()
+        vbox.addWidget(self.drawing_area)
         vbox.addWidget(self.secret_label)
         vbox.addWidget(self.user_input)
         vbox.addWidget(self.wrong_letters)
@@ -23,6 +27,7 @@ class HangmanUI(QtWidgets.QMainWindow):
         vbox.addWidget(self.play_again_btn)
         vbox.addWidget(self.exit_btn)
         panel.setLayout(vbox)
+
         self.setCentralWidget(panel)
 
     def display_secret(self, secret):
@@ -31,6 +36,7 @@ class HangmanUI(QtWidgets.QMainWindow):
     def play_again(self):
         self.hangman.start()
         self.secret_label.setText(self.hangman.get_secret())
+        self.drawing_area.draw(0)
 
     def check_user_input(self):
         print(self.user_input.text())
@@ -39,5 +45,6 @@ class HangmanUI(QtWidgets.QMainWindow):
         self.correct_letters.setText("Correct: " + self.hangman.correct)
         self.wrong_letters.setText("Wrong: " + self.hangman.wrong)
         self.secret_label.setText(self.hangman.get_secret())
+        self.drawing_area.draw(len(self.hangman.wrong))
 
 
