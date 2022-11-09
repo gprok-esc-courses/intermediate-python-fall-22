@@ -1,9 +1,13 @@
 import pymongo
 
-print(pymongo.version)
+import dotenv
+import os
 
+dotenv.load_dotenv()
+user = os.getenv('MONGODB_ATLAS_USER')
+password = os.getenv('MONGODB_ATLAS_PASSWORD')
 
-client = pymongo.MongoClient("mongodb+srv://temp:4vadeTQfsi62Z7b@cluster0.zae6j.mongodb.net/?retryWrites=true&w=majority", tls=True, tlsAllowInvalidCertificates=True)
+client = pymongo.MongoClient("mongodb+srv://"+user+":"+password+"@cluster0.zae6j.mongodb.net/?retryWrites=true&w=majority", tls=True, tlsAllowInvalidCertificates=True)
 db = client.company
 
 print(db)
@@ -12,10 +16,10 @@ employees = db.employees
 print(employees)
 
 employee = {
-    "last_name": "Peter",
-    "first_name": "Pan",
+    "last_name": "Mary",
+    "first_name": "Ann",
     "age": 32,
-    "position": "manager"
+    "position": "marketing"
 }
 
 employees.insert_one(employee)
